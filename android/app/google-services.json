@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "551147845662",
+    "project_id": "knowledge-cards-30b81",
+    "storage_bucket": "knowledge-cards-30b81.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:551147845662:android:a0070347e6beeef442560f",
+        "android_client_info": {
+          "package_name": "com.example.knowledge_cards"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "551147845662-ht4d8lf28kb9nu1duogh77u2qvgslqam.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxqR-dU8mo9UeTGj4F9-B6LVpwBXrhrfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "551147845662-ht4d8lf28kb9nu1duogh77u2qvgslqam.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
