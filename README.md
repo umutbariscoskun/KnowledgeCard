@@ -1,6 +1,7 @@
 # knowledge_cards
 
-A new Flutter project.
+
+Clean architecture and firebase based project
 
 ## Getting Started
 
