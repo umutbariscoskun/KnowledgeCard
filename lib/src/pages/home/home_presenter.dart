@@ -1,8 +1,8 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:knowledge_cards/src/domain/entities/knowledge_card.dart';
 import 'package:knowledge_cards/src/domain/repository/knowledge_card_repository.dart';
+import 'package:knowledge_cards/src/domain/usecases/delete_knowledge_card.dart';
 import 'package:knowledge_cards/src/domain/usecases/get_cards.dart';
-import 'package:knowledge_cards/src/domain/usecases/initialize_card_repository.dart';
 import 'package:knowledge_cards/src/domain/usecases/toggle_knowledge_cards.dart';
 import 'package:knowledge_cards/src/domain/usecases/update_cards_favorite_situation.dart';
 import 'package:knowledge_cards/src/domain/usecases/uptade_star_count.dart';
@@ -10,9 +10,6 @@ import 'package:knowledge_cards/src/domain/usecases/uptade_star_count.dart';
 class HomePresenter extends Presenter {
   Function getCardsOnNext;
   Function getCardsOnError;
-
-  // Function initializeCardsOnComplete;
-  // Function initializeCardsOnError;
 
   Function toggleKnowledgeCardsOnComplete;
   Function toggleKnowledgeCardsOnError;
@@ -23,23 +20,23 @@ class HomePresenter extends Presenter {
   Function updateCardsFavoriteSituationOnComplete;
   Function updateCardsFavoriteSituationOnError;
 
+  Function deleteKnowledgeCardOnComplete;
+  Function deleteKnowledgeCardOnError;
+
   final GetCards _getCards;
-  // final InitializeCards _initializeCards;
+
   final ToggleKnowledgeCards _toggleKnowledgeCards;
   final UpdateStarCount _updateStarCount;
   final UpdateCardsFavoriteSituation _updateCardsFavoriteSituation;
+  final DeleteKnowledgeCard _deleteKnowledgeCard;
 
   HomePresenter(KnowledgeCardRepository cardRepository)
       : _getCards = GetCards(cardRepository),
-        // _initializeCards = InitializeCards(cardRepository),
         _toggleKnowledgeCards = ToggleKnowledgeCards(cardRepository),
         _updateStarCount = UpdateStarCount(cardRepository),
         _updateCardsFavoriteSituation =
-            UpdateCardsFavoriteSituation(cardRepository);
-
-  // void initializeCards() {
-  //   _initializeCards.execute(_InitializeCardsObserver(this));
-  // }
+            UpdateCardsFavoriteSituation(cardRepository),
+        _deleteKnowledgeCard = DeleteKnowledgeCard(cardRepository);
 
   void getCards() {
     _getCards.execute(_GetCardsObserver(this));
@@ -55,6 +52,13 @@ class HomePresenter extends Presenter {
         UpdateStarCountParams(knowledgeCard, starCount));
   }
 
+  void deleteKnowledgeCard(KnowledgeCard knowledgeCard) {
+    _deleteKnowledgeCard.execute(
+      _DeleteKnowledgeCardObserver(this),
+      DeleteKnowledgeCardParams(knowledgeCard),
+    );
+  }
+
   void updateCardsFavoriteSituation(
       KnowledgeCard knowledgeCard, bool situation) {
     _updateCardsFavoriteSituation.execute(
@@ -65,10 +69,11 @@ class HomePresenter extends Presenter {
   @override
   void dispose() {
     _getCards.dispose();
-    // _initializeCards.dispose();
+
     _toggleKnowledgeCards.dispose();
     _updateStarCount.dispose();
     _updateCardsFavoriteSituation.dispose();
+    _deleteKnowledgeCard.dispose();
   }
 }
 
@@ -91,26 +96,6 @@ class _ToggleKnowledgeCardsObserver extends Observer<void> {
   @override
   void onNext(_) {}
 }
-
-// class _InitializeCardsObserver extends Observer<void> {
-//   final HomePresenter _presenter;
-//   _InitializeCardsObserver(this._presenter);
-
-//   @override
-//   void onComplete() {
-//     assert(_presenter.initializeCardsOnComplete != null);
-//     _presenter.initializeCardsOnComplete();
-//   }
-
-//   @override
-//   void onError(e) {
-//     assert(_presenter.initializeCardsOnError != null);
-//     _presenter.initializeCardsOnError(e);
-//   }
-
-//   @override
-//   void onNext(_) {}
-// }
 
 class _GetCardsObserver extends Observer<List<KnowledgeCard>> {
   final HomePresenter _presenter;
@@ -165,6 +150,26 @@ class _UpdateCardsFavoriteSituationObserver extends Observer<void> {
   void onError(e) {
     assert(_presenter.updateCardsFavoriteSituationOnError != null);
     _presenter.updateCardsFavoriteSituationOnError(e);
+  }
+
+  @override
+  void onNext(_) {}
+}
+
+class _DeleteKnowledgeCardObserver extends Observer<void> {
+  final HomePresenter _presenter;
+  _DeleteKnowledgeCardObserver(this._presenter);
+
+  @override
+  void onComplete() {
+    assert(_presenter.deleteKnowledgeCardOnComplete != null);
+    _presenter.deleteKnowledgeCardOnComplete();
+  }
+
+  @override
+  void onError(e) {
+    assert(_presenter.deleteKnowledgeCardOnError != null);
+    _presenter.deleteKnowledgeCardOnError(e);
   }
 
   @override

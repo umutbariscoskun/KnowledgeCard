@@ -22,16 +22,18 @@ class DataCardRepository implements KnowledgeCardRepository {
   Future<void> initializeCards() async {
     try {
       final value = await firestoreInstance.collection("cards").get();
-      value.docs.forEach((element) {
-        KnowledgeCard card = KnowledgeCard(
-            id: element.id,
-            name: element.data()['name'],
-            imageUrl: element.data()['imageUrl'],
-            starCount: element.data()['starCount'],
-            description: element.data()['description'],
-            isFavorite: element.data()['isFavorited']);
-        cards.add(card);
-      });
+      value.docs.forEach(
+        (element) {
+          KnowledgeCard card = KnowledgeCard(
+              id: element.id,
+              name: element.data()['name'],
+              imageUrl: element.data()['imageUrl'],
+              starCount: element.data()['starCount'],
+              description: element.data()['description'],
+              isFavorite: element.data()['isFavorited']);
+          cards.add(card);
+        },
+      );
     } catch (e) {
       print(e);
     }
@@ -81,13 +83,28 @@ class DataCardRepository implements KnowledgeCardRepository {
   @override
   Future<void> createKnowledgeCard(KnowledgeCard knowledgeCard) async {
     try {
-      print(UniqueKey());
       await firestoreInstance.collection("cards").add(
             knowledgeCard.toMap(),
           );
+      String id =
+          firestoreInstance.collection("cards").doc(knowledgeCard.id).id;
+      print(id);
       cards.add(knowledgeCard);
     } catch (e) {
       print(e);
+    }
+  }
+
+  @override
+  Future<void> deleteKnowledgeCard(KnowledgeCard knowledgeCard) async {
+    try {
+      final CollectionReference collectionReference =
+          firestoreInstance.collection("cards");
+      await collectionReference.doc(knowledgeCard.id).delete();
+
+      cards.removeWhere((element) => element.id == knowledgeCard.id);
+    } catch (e) {
+      return e;
     }
   }
 }

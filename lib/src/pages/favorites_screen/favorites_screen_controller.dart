@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:knowledge_cards/src/domain/entities/knowledge_card.dart';
 import 'package:knowledge_cards/src/domain/repository/knowledge_card_repository.dart';
-import 'package:knowledge_cards/src/pages/favorites_screen.dart/favorites_screen_presenter.dart';
+import 'package:knowledge_cards/src/pages/favorites_screen/favorites_screen_presenter.dart';
 
 class FavoritesScreenController extends Controller {
   final FavoritesScreenPresenter _favoriteScreenPresenter;

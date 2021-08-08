@@ -3,6 +3,8 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:knowledge_cards/src/domain/entities/knowledge_card.dart';
 import 'package:knowledge_cards/src/domain/repository/knowledge_card_repository.dart';
 import 'package:knowledge_cards/src/pages/home/home_presenter.dart';
+import 'package:knowledge_cards/src/pages/home/home_view.dart';
+import 'package:knowledge_cards/src/pages/splash_screen/splash_screen_view.dart';
 
 class HomeController extends Controller {
   final HomePresenter _homePresenter;
@@ -14,7 +16,6 @@ class HomeController extends Controller {
   bool isFavorited = false;
 
   void onInitState() {
-    // _homePresenter.initializeCards();
     _homePresenter.getCards();
     super.onInitState();
   }
@@ -39,20 +40,27 @@ class HomeController extends Controller {
       refreshUI();
     };
 
+    _homePresenter.deleteKnowledgeCardOnComplete = () {
+      print("deleting complete!");
+      Navigator.push(
+        getContext(),
+        MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ),
+      );
+      refreshUI();
+    };
+
+    _homePresenter.deleteKnowledgeCardOnError = (e) {
+      print(e);
+    };
+
     _homePresenter.toggleKnowledgeCardsOnComplete = () {
       print("toggling cards complete succesfuly");
     };
     _homePresenter.toggleKnowledgeCardsOnError = (e) {
       print("cards couldn't toggle");
     };
-
-    // _homePresenter.initializeCardsOnComplete = () {
-    //   _homePresenter.getCards();
-    //   print("initialize cards complete succesfuly");
-    // };
-    // _homePresenter.initializeCardsOnError = (e) {
-    //   print("initiliaze cards uncomplete");
-    // };
 
     _homePresenter.getCardsOnNext = (List<KnowledgeCard> response) {
       cards = response;
@@ -86,6 +94,11 @@ class HomeController extends Controller {
   void updateCardsFavoriteSituation(
       KnowledgeCard knowledgeCard, bool situation) {
     _homePresenter.updateCardsFavoriteSituation(knowledgeCard, situation);
+    refreshUI();
+  }
+
+  void deleteKnowledgeCard(KnowledgeCard knowledgeCard) {
+    _homePresenter.deleteKnowledgeCard(knowledgeCard);
     refreshUI();
   }
 

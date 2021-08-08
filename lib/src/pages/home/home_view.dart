@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:knowledge_cards/src/data/repositories/data_card_repository.dart';
-import 'package:knowledge_cards/src/pages/create_knowledge_card_screens/create_knowledge_card_view.dart';
-import 'package:knowledge_cards/src/pages/favorites_screen.dart/favorites_screen_view.dart';
+import 'package:knowledge_cards/src/pages/create_knowledgecard/create_knowledgecard_view.dart';
+import 'package:knowledge_cards/src/pages/favorites_screen/favorites_screen_view.dart';
 import 'package:knowledge_cards/src/pages/home/home_controller.dart';
 
 class HomePage extends View {
@@ -95,6 +95,16 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                                               ),
                                       ),
                                       IconButton(
+                                        onPressed: () =>
+                                            controller.deleteKnowledgeCard(
+                                                controller.cards[index]),
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Colors.white,
+                                          size: 43,
+                                        ),
+                                      ),
+                                      IconButton(
                                           onPressed: () {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(SnackBar(
@@ -151,9 +161,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                                           width: size.width * 0.8,
                                           child: Text(
                                             controller.cards[index].name,
-                                            style: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                fontSize: 40),
+                                            style: TextStyle(fontSize: 40),
                                           ),
                                         ),
                                       ],
@@ -192,7 +200,6 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                                     Text(
                                       controller.cards[index].description,
                                       style: TextStyle(
-                                          fontFamily: 'Poppins',
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700),
                                     ),
