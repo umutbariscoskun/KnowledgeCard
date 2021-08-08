@@ -9,4 +9,5 @@ abstract class KnowledgeCardRepository {
   Future<void> updateCardsFavoriteSituation(
       KnowledgeCard knowledgeCard, bool situation);
   Future<void> createKnowledgeCard(KnowledgeCard knowledgeCard);
+  Future<void> deleteKnowledgeCard(KnowledgeCard knowledgeCard);
 }

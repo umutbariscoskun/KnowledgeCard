@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:knowledge_cards/src/data/repositories/data_card_repository.dart';
-import 'package:knowledge_cards/src/pages/create_knowledge_card_screens/create_knowledge_card_controller.dart';
+import 'package:knowledge_cards/src/pages/create_knowledgecard/create_knowledgecard_controller.dart';
 
 class CreateKnowledgeCardScreen extends View {
   @override
@@ -19,6 +19,7 @@ class _CreateKnowledgeCardScreenState extends ViewState<
   Widget get view {
     Size size = MediaQuery.of(context).size;
     return Container(
+      key: globalKey,
       decoration: BoxDecoration(
           image: DecorationImage(
               image: NetworkImage(
@@ -122,7 +123,6 @@ class _CreateKnowledgeCardScreenState extends ViewState<
                         child: ElevatedButton(
                       onPressed: () {
                         controller.createKnowledgeCard();
-                        Navigator.pop(context);
                       },
                       child: Text("Create"),
                       style:

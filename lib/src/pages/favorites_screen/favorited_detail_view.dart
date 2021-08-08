@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:knowledge_cards/src/data/repositories/data_card_repository.dart';
-import 'package:knowledge_cards/src/pages/favorites_screen.dart/favorites_screen_controller.dart';
+import 'package:knowledge_cards/src/pages/favorites_screen/favorites_screen_controller.dart';
 
 class FavoritedDetailScreen extends View {
   FavoritedDetailScreen(this.selectedIndex);

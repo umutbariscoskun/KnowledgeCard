@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:knowledge_cards/src/domain/entities/knowledge_card.dart';
 import 'package:knowledge_cards/src/domain/repository/knowledge_card_repository.dart';
-import 'package:knowledge_cards/src/pages/create_knowledge_card_screens/create_knowledge_card_presenter.dart';
+import 'package:knowledge_cards/src/pages/create_knowledgecard/create_knowledgecard_presenter.dart';
 import 'package:knowledge_cards/src/pages/home/home_view.dart';
+import 'package:knowledge_cards/src/pages/splash_screen/splash_screen_view.dart';
 
 class CreateKnowledgeCardController extends Controller {
   final CreateKnowledgeCardPresenter _knowledgeCardPresenter;
@@ -21,14 +22,19 @@ class CreateKnowledgeCardController extends Controller {
   bool isCreatingFieldsNull = false;
 
   void onInitState() {
+    _knowledgeCardPresenter.getCards();
     super.onInitState();
   }
 
   @override
   void initListeners() {
     _knowledgeCardPresenter.createKnowledgeCardOnComplete = () {
-      _knowledgeCardPresenter.getCards();
-
+      Navigator.push(
+        getContext(),
+        MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ),
+      );
       print("creating knowledge card is succesfuly");
     };
 
